@@ -22,6 +22,18 @@ const BookingCard: React.FC = () => {
   // Generate date range (42 days starting from today)
   const dateRange = useMemo<DateItem[]>(() => generateDateRange(), []);
 
+  // Get unique months from date range
+  const months = useMemo(() => {
+    const uniqueMonths = new Set<string>();
+
+    dateRange.forEach((dateItem) => {
+      const monthKey = format(dateItem.date, 'MMM');
+      uniqueMonths.add(monthKey);
+    });
+
+    return Array.from(uniqueMonths);
+  }, [dateRange]);
+
   // Generate time slots based on selected date
   const timeSlots = useMemo<TimeSlot[]>(
     () => (selectedDate ? generateTimeSlots(selectedDate) : []),
@@ -47,7 +59,7 @@ const BookingCard: React.FC = () => {
   const isConfirmDisabled = !selectedDate || !selectedTime;
 
   return (
-    <article className="w-full max-w-[500px] bg-white rounded-3xl shadow-2xl p-8">
+    <article className="w-full max-w-[568px] bg-white rounded-3xl shadow-2xl p-16">
       <header className="flex items-start gap-6 mb-8">
         <div className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0 bg-gradient-to-br from-teal-400 to-cyan-500">
           <Image
@@ -61,7 +73,7 @@ const BookingCard: React.FC = () => {
         </div>
 
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2" style={{ fontFamily: 'var(--font-serif)' }}>
+          <h1 className="text-[28px] font-bold text-gray-900 mb-2" style={{ fontFamily: 'var(--font-serif)' }}>
             Book a Session
           </h1>
 
@@ -71,13 +83,20 @@ const BookingCard: React.FC = () => {
         </div>
       </header>
 
-      <nav className="flex items-center justify-center gap-8 mb-6" aria-label="Month navigation">
-        <span className="text-gray-400 text-sm font-medium">Sep</span>
-        <span className="text-gray-900 text-sm font-semibold" aria-current="true">Oct</span>
+      <nav className="flex items-center gap-4" aria-label="Month navigation">
+        {months.map((month, index) => (
+          <span
+            key={month}
+            className='text-sm text-gray-500'
+            aria-current={index === 0 ? 'true' : undefined}
+          >
+            {month}
+          </span>
+        ))}
       </nav>
 
       <section className="mb-8" aria-labelledby="date-selection-heading">
-        <ScrollableList className="px-8 py-2">
+        <ScrollableList className="py-2">
           {dateRange.map((dateItem) => (
             <DateCard
               key={`date-${format(dateItem.date, 'yyyy-MM-dd')}`}
@@ -98,7 +117,7 @@ const BookingCard: React.FC = () => {
 
       {selectedDate && (
         <section className="mb-8" aria-labelledby="time-selection-heading">
-          <ScrollableList className="px-8 py-2">
+          <ScrollableList className="py-2">
             {timeSlots.map((slot) => (
               <TimeSlotButton
                 key={`time-${format(slot.time, 'HH:mm')}`}
@@ -126,7 +145,7 @@ const BookingCard: React.FC = () => {
           ${
             isConfirmDisabled
               ? 'bg-gray-300 cursor-not-allowed'
-              : 'bg-gray-900 hover:bg-gray-800 focus:ring-gray-400 shadow-lg hover:shadow-xl'
+              : 'bg-gray-900 hover:bg-gray-800 focus:ring-gray-400 shadow-lg hover:shadow-xl cursor-pointer'
           }
         `}
         aria-label="Confirm booking"

@@ -64,10 +64,10 @@ const ScrollableList: React.FC<ScrollableListProps> = ({
           type="button"
           onClick={() => handleScroll('left')}
           onKeyDown={(e) => handleKeyDown(e, 'left')}
-          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8
+          className="absolute left-[-28] top-1/2 -translate-y-1/2 z-10 w-8 h-8
                    flex items-center justify-center rounded-full
-                   bg-white shadow-md hover:shadow-lg transition-shadow
-                   focus:outline-none focus:ring-2 focus:ring-pink-500"
+                   bg-white shadow-md hover:shadow-lg transition-shadow cursor-pointer
+                   focus:outline-none focus:ring-2 focus:ring-gray-100"
           aria-label="Scroll left"
           tabIndex={0}
         >
@@ -89,10 +89,10 @@ const ScrollableList: React.FC<ScrollableListProps> = ({
           type="button"
           onClick={() => handleScroll('right')}
           onKeyDown={(e) => handleKeyDown(e, 'right')}
-          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8
+          className="absolute right-[-28] top-1/2 -translate-y-1/2 z-10 w-8 h-8
                    flex items-center justify-center rounded-full
-                   bg-white shadow-md hover:shadow-lg transition-shadow
-                   focus:outline-none focus:ring-2 focus:ring-pink-500"
+                   bg-white shadow-md hover:shadow-lg transition-shadow cursor-pointer
+                   focus:outline-none focus:ring-2 focus:ring-gray-100"
           aria-label="Scroll right"
           tabIndex={0}
         >
