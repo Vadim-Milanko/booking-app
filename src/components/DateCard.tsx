@@ -21,12 +21,12 @@ const DateCard: React.FC<DateCardProps> = ({
       onClick={onClick}
       className={`
         flex-shrink-0 flex flex-col items-center justify-center
-        w-16 h-16 rounded-xl transition-all duration-200 cursor-pointer
+        w-16 h-16 rounded-xl transition-all duration-200
         focus:outline-none focus:ring-2 focus:ring-gray-100 focus:ring-offset-2
         ${
           isSelected
-            ? 'bg-gray-200'
-            : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
+            ? 'bg-gray-200 text-pink-500'
+            : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 cursor-pointer'
         }
       `}
       aria-label={`${dayOfWeek} ${dayOfMonth}`}
@@ -53,6 +53,3 @@ const DateCard: React.FC<DateCardProps> = ({
 };
 
 export default DateCard;
-
-
-// `text-base font-medium ${isToday ? 'text-orange-500' : 'text-black'}`

@@ -2,8 +2,13 @@
 
 import React, { useRef, useState, useEffect } from 'react';
 
-import ChevronLeft from '../icons/ChevronLeft';
-import ChevronRight from '../icons/ChevronRight';
+import ChevronLeft from '@/icons/ChevronLeft';
+import ChevronRight from '@/icons/ChevronRight';
+
+export enum ScrollDirection {
+  LEFT = 'left',
+  RIGHT = 'right',
+}
 
 interface ScrollableListProps {
   children: React.ReactNode;
@@ -36,10 +41,10 @@ const ScrollableList: React.FC<ScrollableListProps> = ({
     return () => window.removeEventListener('resize', updateScrollButtons);
   }, [children]);
 
-  const handleScroll = (direction: 'left' | 'right') => {
+  const handleScroll = (direction: ScrollDirection) => {
     if (!scrollRef.current) return;
 
-    const scrollDistance = direction === 'left' ? -scrollAmount : scrollAmount;
+    const scrollDistance = direction === ScrollDirection.LEFT ? -scrollAmount : scrollAmount;
 
     scrollRef.current.scrollBy({
       left: scrollDistance,
@@ -49,7 +54,7 @@ const ScrollableList: React.FC<ScrollableListProps> = ({
 
   const handleKeyDown = (
     e: React.KeyboardEvent<HTMLButtonElement>,
-    direction: 'left' | 'right'
+    direction: ScrollDirection
   ) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
@@ -62,8 +67,8 @@ const ScrollableList: React.FC<ScrollableListProps> = ({
       {canScrollLeft && (
         <button
           type="button"
-          onClick={() => handleScroll('left')}
-          onKeyDown={(e) => handleKeyDown(e, 'left')}
+          onClick={() => handleScroll(ScrollDirection.LEFT)}
+          onKeyDown={(e) => handleKeyDown(e, ScrollDirection.LEFT)}
           className="absolute left-[-28] top-1/2 -translate-y-1/2 z-10 w-8 h-8
                    flex items-center justify-center rounded-full
                    bg-white shadow-md hover:shadow-lg transition-shadow cursor-pointer
@@ -87,8 +92,8 @@ const ScrollableList: React.FC<ScrollableListProps> = ({
       {canScrollRight && (
         <button
           type="button"
-          onClick={() => handleScroll('right')}
-          onKeyDown={(e) => handleKeyDown(e, 'right')}
+          onClick={() => handleScroll(ScrollDirection.RIGHT)}
+          onKeyDown={(e) => handleKeyDown(e, ScrollDirection.RIGHT)}
           className="absolute right-[-28] top-1/2 -translate-y-1/2 z-10 w-8 h-8
                    flex items-center justify-center rounded-full
                    bg-white shadow-md hover:shadow-lg transition-shadow cursor-pointer

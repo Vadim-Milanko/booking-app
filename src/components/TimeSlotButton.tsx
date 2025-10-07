@@ -19,14 +19,14 @@ const TimeSlotButton: React.FC<TimeSlotButtonProps> = ({
       onClick={onClick}
       disabled={disabled}
       className={`
-        flex-shrink-0 px-6 py-3 rounded-xl font-medium text-sm
+        flex-shrink-0 px-6 py-3 rounded-full font-medium text-sm
         transition-all duration-200
         focus:outline-none focus:ring-2 focus:ring-gray-100 focus:ring-offset-2
         ${
           disabled
             ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
             : isSelected
-            ? 'bg-gray-100 text-pink-500 cursor-pointer'
+            ? 'bg-gray-100 text-pink-500'
             : 'bg-white hover:bg-gray-50 border border-gray-200 cursor-pointer'
         }
       `}

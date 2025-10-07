@@ -10,6 +10,7 @@ import {
   getTimestamp,
 } from '@/utils/dateUtils';
 import {DateItem, TimeSlot} from "@/interfaces/date";
+import ClockIcon from '@/icons/ClockIcon';
 
 import DateCard from './DateCard';
 import TimeSlotButton from './TimeSlotButton';
@@ -59,44 +60,72 @@ const BookingCard: React.FC = () => {
   const isConfirmDisabled = !selectedDate || !selectedTime;
 
   return (
-    <article className="w-full max-w-[568px] bg-white rounded-3xl shadow-2xl p-16">
-      <header className="flex items-start gap-6 mb-8">
-        <div className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0 bg-gradient-to-br from-teal-400 to-cyan-500">
-          <Image
-            src="/desktop-icon.png"
-            alt="Stylist profile"
-            width={80}
-            height={80}
-            className="w-full h-full object-cover"
-            priority
-          />
+    <article className="w-full h-full md:max-w-[568px] md:bg-white md:rounded-3xl md:shadow-2xl overflow-hidden flex flex-col">
+      {/* Mobile Header */}
+        <div className="md:hidden relative px-6 py-28">
+          <div className="relative z-10">
+            <h2 className="text-white text-[28px] font-medium mb-2">Cool session</h2>
+
+            <p className="text-white/90 text-sm mb-4">Additional type</p>
+
+            <div className="flex items-center gap-2 text-white/90 text-sm">
+              <ClockIcon className="w-4 h-4" />
+              <span>30 min</span>
+            </div>
+          </div>
+
+          <div className="absolute right-0 top-0 w-48 h-full">
+            <Image
+              src="/mobile-icon.png"
+              alt="Stylist"
+              width={200}
+              height={300}
+              className="object-cover h-full"
+              priority
+            />
+          </div>
         </div>
 
-        <div>
-          <h1 className="text-[28px] font-bold text-gray-900 mb-2" style={{ fontFamily: 'var(--font-serif)' }}>
-            Book a Session
-          </h1>
+      {/* Main Content */}
+      <div className="flex-1 bg-white px-6 py-8 md:p-16 -mt-8 md:mt-0 rounded-t-3xl md:rounded-none relative z-10">
+        {/* Header */}
+        <header className="flex items-start gap-6 mb-8">
+          <div className="hidden md:block flex-shrink-0">
+            <Image
+              src="/desktop-icon.png"
+              alt="Stylist profile"
+              width={80}
+              height={80}
+              className="w-full h-full object-cover"
+              priority
+            />
+          </div>
 
-          <p className="text-gray-500 text-sm leading-relaxed">
-            Choose a date and time that is convenient for you to e-meet your stylist
-          </p>
-        </div>
-      </header>
+          <div>
+            <h1 className="text-[28px] font-bold mb-2">
+              Book a Session
+            </h1>
 
-      <nav className="flex items-center gap-4" aria-label="Month navigation">
-        {months.map((month, index) => (
-          <span
-            key={month}
-            className='text-sm text-gray-500'
-            aria-current={index === 0 ? 'true' : undefined}
-          >
-            {month}
-          </span>
-        ))}
-      </nav>
+            <p className="text-gray-500 text-sm leading-relaxed">
+              Choose a date and time that is convenient for you to e-meet your stylist
+            </p>
+          </div>
+        </header>
 
-      <section className="mb-8" aria-labelledby="date-selection-heading">
-        <ScrollableList className="py-2">
+        <nav className="flex items-center gap-4" aria-label="Month navigation">
+          {months.map((month, index) => (
+            <span
+              key={month}
+              className='text-sm text-gray-500'
+              aria-current={index === 0 ? 'true' : undefined}
+            >
+              {month}
+            </span>
+          ))}
+        </nav>
+
+        <section className="mb-8" aria-labelledby="date-selection-heading">
+          <ScrollableList className="py-2">
           {dateRange.map((dateItem) => (
             <DateCard
               key={`date-${format(dateItem.date, 'yyyy-MM-dd')}`}
@@ -112,11 +141,11 @@ const BookingCard: React.FC = () => {
               onClick={() => handleDateSelect(dateItem.date)}
             />
           ))}
-        </ScrollableList>
-      </section>
+          </ScrollableList>
+        </section>
 
-      {selectedDate && (
-        <section className="mb-8" aria-labelledby="time-selection-heading">
+        {selectedDate && (
+          <section className="mb-8" aria-labelledby="time-selection-heading">
           <ScrollableList className="py-2">
             {timeSlots.map((slot) => (
               <TimeSlotButton
@@ -133,26 +162,27 @@ const BookingCard: React.FC = () => {
             ))}
           </ScrollableList>
         </section>
-      )}
+        )}
 
-      <button
-        type="button"
-        onClick={handleConfirm}
-        disabled={isConfirmDisabled}
-        className={`
-          w-full py-4 rounded-full font-semibold text-white text-base
-          transition-all duration-300 focus:outline-none focus:ring-4
-          ${
-            isConfirmDisabled
-              ? 'bg-gray-300 cursor-not-allowed'
-              : 'bg-gray-900 hover:bg-gray-800 focus:ring-gray-400 shadow-lg hover:shadow-xl cursor-pointer'
-          }
-        `}
-        aria-label="Confirm booking"
-        aria-disabled={isConfirmDisabled}
-      >
-        Confirm
-      </button>
+        <button
+          type="button"
+          onClick={handleConfirm}
+          disabled={isConfirmDisabled}
+          className={`
+            w-full py-4 rounded-full font-semibold text-white text-base
+            transition-all duration-300 focus:outline-none focus:ring-4
+            ${
+              isConfirmDisabled
+                ? 'bg-gray-300 cursor-not-allowed'
+                : 'bg-gray-900 hover:bg-gray-800 focus:ring-gray-400 shadow-lg hover:shadow-xl cursor-pointer'
+            }
+          `}
+          aria-label="Confirm booking"
+          aria-disabled={isConfirmDisabled}
+        >
+          Confirm
+        </button>
+      </div>
     </article>
   );
 };
